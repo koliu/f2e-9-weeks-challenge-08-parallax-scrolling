@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app.h-100-p {{page}}
+  .app.h-100-p Coming Soon...
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
     .item.square
@@ -53,7 +53,8 @@ $star-triangle-height: 365px - $star-head-height;
       width: 439px;
       z-index: 6;
       animation: spin 4s linear reverse forwards,
-                zoom-out 1s linear 4.25s forwards;
+                zoom-out 1s linear 4.25s forwards,
+                fade 2s linear 5.25s reverse forwards;
     }
     &.circle {
       background-color: $color-blue;
@@ -62,7 +63,8 @@ $star-triangle-height: 365px - $star-head-height;
       width: 539px;
       z-index: 8;
       animation: zoom-in-out 4s linear forwards,
-                zoom-out 1s linear 4.5s forwards;
+                zoom-out 1s linear 4.5s forwards,
+                fade 2s linear 5.25s reverse forwards;
     }
 
     &.star {
