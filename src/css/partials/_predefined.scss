@@ -1,0 +1,86 @@
+@import "../css/partials/variables";
+
+/* background classes */
+.bg-black {
+  background-color: $color-black;
+}
+.bg-white {
+  background-color: $color-white;
+}
+
+/* border classes */
+.radius {
+  border-radius: 3px;
+}
+
+/* color classes */
+.black {
+  color: $color-black;
+}
+.blue {
+  color: $color-blue;
+}
+.blue-light {
+  color: $color-blue-light;
+}
+.gray {
+  color: $color-gray;
+}
+.gray-dark {
+  color: $color-gray-dark;
+}
+.green {
+  color: $color-green;
+}
+.red {
+  color: $color-red;
+}
+.white {
+  color: $color-white;
+}
+
+/* font classes */
+.bold {
+  font-weight: $font-bold;
+}
+.italic {
+  font-style: italic;
+}
+.ft-title {
+  font-size: 64px;
+  font-weight: $font-bold;
+}
+.ft-sub-title {
+  font-size: 36px;
+  font-weight: $font-bold;
+}
+.ft-sub-title-2 {
+  font-size: 24px;
+  font-weight: $font-regular;
+}
+.ft-paragraph {
+  font-size: 20px;
+  font-weight: $font-regular;
+}
+
+/* mixin */
+@mixin box($border: none, $radius: 0, $lineHeight: inherit, $height: inherit, $width: inherit, $bgColor: $color-white, $padding: inherit, $box-sizing: inherit) {
+  background-color: $bgColor;
+  border: $border;
+  border-radius: $radius;
+  box-sizing: $box-sizing;
+  height: $height;
+  line-height: $lineHeight;
+  padding: $padding;
+  width: $width;
+}
+@mixin flex-box($justify-content: flex-start, $align-items: flex-start, $direction: row, $wrap: nowrap) { //, $flex-shrink: 1, $flex-grow: 0, $flex-basis: auto) {
+  align-items: $align-items;
+  display: flex;
+  // flex-basis: $flex-basis;
+  flex-direction: $direction;
+  // flex-grow: $flex-grow;
+  // flex-shrink: $flex-shrink;
+  flex-wrap: $wrap;
+  justify-content: $justify-content;
+}
