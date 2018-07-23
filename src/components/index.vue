@@ -1,8 +1,15 @@
 <template lang="pug">
-  .app {{page}}
+  .app.h-100-p {{page}}
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
-  
+    .item.square
+    .item.circle
+    .item.star
+      .top
+      .bottom
+    .item.title
+      i.ft-title GEOMETRY PERSON
+      i.ft-sub-title-2 find your core personality type in shapes!
 </template>
 <script>
 export default {
@@ -30,8 +37,79 @@ export default {
 @import "../css/partials/animations";
 @import "../css/partials/text-utils";
 
-.app{  
+$star-height: 365px;
+$star-head-height: 57px;
+$star-triangle-height: 365px - $star-head-height;
+.app {
   padding-bottom: 30px;
+  @include flex-box(center, center);
+
+  .item {
+    position: absolute;
+
+    &.square {
+      background-color: $color-black;
+      height: 439px;
+      width: 439px;
+      z-index: 6;
+      animation: spin 4s linear reverse forwards,
+                zoom-out 1s linear 4.25s forwards;
+    }
+    &.circle {
+      background-color: $color-blue;
+      border-radius: 50%;
+      height: 539px;
+      width: 539px;
+      z-index: 8;
+      animation: zoom-in-out 4s linear forwards,
+                zoom-out 1s linear 4.5s forwards;
+    }
+
+    &.star {
+      box-sizing: border-box;
+      height: $star-height;
+      width: $star-height;
+      z-index: 10;
+      animation: spin 4s linear forwards,
+                zoom-out 1s linear 4.75s forwards,
+                fade 2s linear 5.25s reverse forwards;
+
+      .top,
+      .bottom {
+        border-left: $star-height / 2 solid transparent;
+        border-right: $star-height / 2 solid transparent;
+        position: absolute;
+      }
+
+      .top {
+        border-bottom: $star-triangle-height solid $color-red;
+      }
+
+      .bottom {
+        border-top: $star-triangle-height solid $color-red;
+        margin-top: $star-head-height;
+      }
+    }
+
+    &.title {
+      color: $color-white;
+      z-index: 12;
+      animation: fade 2s linear 5.25s reverse forwards;
+      @include flex-box(center, center, column, wrap);
+      
+      i {
+        display: block;
+
+        &:first-child {
+          margin-bottom: 12px;
+        }
+
+        &:last-child {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
 }
 
 .btn-login {
@@ -40,8 +118,8 @@ export default {
   color: $color-yellow;
   position: fixed;
   left: 5px;
-  top: 5px;
-  z-index: 9999;
+  bottom: 5px;
+  z-index: 99999;
 
   &:hover {
     border-color: $color-blue;

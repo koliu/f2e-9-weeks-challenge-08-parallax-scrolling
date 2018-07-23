@@ -1,10 +1,10 @@
 <template lang="pug">
-  div
+  div.h-100-p
     nav.menu
       router-link(to="/index") Home
       router-link(to="/spec") Spec
       router-link(to="/about") About
-    div
+    div.h-100-p
       router-view
 </template>
 <style lang="scss" scoped>

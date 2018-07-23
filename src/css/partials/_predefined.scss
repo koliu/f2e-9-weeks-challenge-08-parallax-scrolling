@@ -63,6 +63,10 @@
   font-weight: $font-regular;
 }
 
+.h-100-p {
+  height: 100%;
+}
+
 /* mixin */
 @mixin box($border: none, $radius: 0, $lineHeight: inherit, $height: inherit, $width: inherit, $bgColor: $color-white, $padding: inherit, $box-sizing: inherit) {
   background-color: $bgColor;

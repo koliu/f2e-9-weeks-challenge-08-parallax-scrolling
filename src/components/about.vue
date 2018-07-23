@@ -6,7 +6,7 @@
         br
         i 一個 fullstack 導向的攻城獅
         br
-        i 這裡是攻打 F2E 的第 5 座城堡 -- Comic Viewer
+        i 這裡是攻打 F2E 的第 8 座城堡 -- Parallax Scrolling
         br
         i 目前已攻下： 
         br
