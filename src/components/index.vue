@@ -38,13 +38,13 @@ export default {
     //   this.finishAnimation = true;
     //   this.navigator.pushTo("/q1");
     // }, 100);//8000);
-    // document.querySelector('.title').addEventListener('animationend', () => {
-    //   this.finishAnimation = true;
-    //   this.navigator.pushTo("/q1");
-    // }, true);
+    document.querySelector('.title').addEventListener('animationend', () => {
+      this.finishAnimation = true;
+      this.navigator.pushTo("/q1");
+    }, true);
 
-    this.finishAnimation = true;
-    this.navigator.pushTo("/q1");
+    // this.finishAnimation = true;
+    // this.navigator.pushTo("/q1");
   }
 };
 </script>
