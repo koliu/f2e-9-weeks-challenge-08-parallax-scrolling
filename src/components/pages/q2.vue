@@ -1,35 +1,20 @@
 <template lang="pug">
-  .q1
+  .q2
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
     .wrap
-      .main(:style="isBeginToRedirect ? 'animation: fade 0.5s forwards reverse' : ''")
-        .ft-title.red Q1
-        .ft-sub-title.white If one day you get a gift that can change the rule of the world, which ability will you choose? 
-        .ft-sub-title-2.blue Choose the answer appeared in your mind instantly
+      .main
+        .ft-title.red Q2
+        .ft-sub-title.white Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?
+        .ft-sub-title-2.blue Choose the answer appeared in your mind 
         ul.list.ft-paragraph.white
-          li(@click.prevent="redirectPage()") Destroy all humans in the world
-          li(@click.prevent="redirectPage()") Make t he war never happened
-          li(@click.prevent="redirectPage()") You won’t get old and live forever
-      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isBeginToRedirect ? 'width: 100%; height: 120%; transition: width 1s ease-in-out 1s' : isTriangleLoaded ? 'height: 120%' : ''")
-        .panel-wrap(:style="isBeginToRedirect ? 'animation: fade 0.5s forwards reverse' : ''")
-          .square(:class="{'load-square':isPanelLoaded, 'default-square':!isPanelLoaded}"
-          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded ? 'animation: spin-linear 3s infinite 0.3s linear' : ''")
-          .triangle(:class="{'load-triangle':isPanelLoaded, 'default-triangle':!isPanelLoaded}"
-          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: spin-linear 3s infinite 0.3s linear reverse' : ''")
-          .circle(:class="{'load-circle':isPanelLoaded, 'default-circle':!isPanelLoaded}"
-          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q2-circle 4s infinite 0.3s linear' : ''")
+      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isTriangleLoaded ? 'height: 120%' : ''")
+        
 </template>
 <script>
 export default {
   data: function() {
     return {
-      isTitleLoaded: false,
-      isPanelLoaded: false,
-      isSquareLoaded: false,
-      isCircleLoaded: false,
-      isTriangleLoaded: false,
-      isBeginToRedirect: false
     };
   },
   methods: {
@@ -41,39 +26,10 @@ export default {
     logout() {
       this.loginManager.logout();
       this.$forceUpdate();
-    },
-    redirectPage() {
-      this.isBeginToRedirect = true;
-      document
-        .querySelector(".panel-wrap")
-        .addEventListener("animationend", () => setTimeout(() => {
-          this.navigator.pushTo("/q2");
-        }, 2000));
     }
   },
   mounted() {
-    const main = document.querySelector(".main");
-    main.addEventListener("animationend", () => {
-      this.isTitleLoaded = true;
-    });
 
-    const panel = document.querySelector(".panel");
-    panel.addEventListener("transitionend", () => {
-      this.isPanelLoaded = true;
-    });
-
-    const square = document.querySelector(".square");
-    square.addEventListener("transitionend", () => {
-      this.isSquareLoaded = true;
-    });
-    const circle = document.querySelector(".circle");
-    circle.addEventListener("transitionend", () => {
-      this.isCircleLoaded = true;
-    });
-    const triangle = document.querySelector(".triangle");
-    triangle.addEventListener("transitionend", () => {
-      this.isTriangleLoaded = true;
-    });
   }
 };
 </script>
@@ -83,7 +39,8 @@ export default {
 @import "../../css/partials/animations";
 @import "../../css/partials/text-utils";
 
-.q1 {
+.q2 {
+  background-color: $color-blue;
   height: 100%;
   width: 100%;
   overflow-y: auto;

@@ -12,19 +12,19 @@ export default {
         name: 'q1',
         component: () =>
           import ('../components/pages/q1.vue')
+      }, {
+        path: '/q2',
+        name: 'q2',
+        component: () =>
+          import ('../components/pages/q2.vue')
         // }, {
         //   path: '',
-        //   name: 'q2'
-        //   component: () =>
-        //     import ('../components/pages/q2.vue')
-        // }, {
-        //   path: '',
-        //   name: 'q3'
+        //   name: 'q3',
         //   component: () =>
         //     import ('../components/pages/q3.vue')
         // }, {
         //   path: '',
-        //   name: 'finish'
+        //   name: 'finish',
         //   component: () =>
         //     import ('../components/pages/finish.vue')
       }]
