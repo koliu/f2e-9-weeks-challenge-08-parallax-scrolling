@@ -45,10 +45,12 @@ export default {
     redirectPage() {
       this.isBeginToRedirect = true;
       document
-        .querySelector(".panel-wrap")
-        .addEventListener("animationend", () => setTimeout(() => {
-          this.navigator.pushTo("/q2");
-        }, 2000));
+        .querySelector(".panel")
+        .addEventListener("transitionend", () => {
+          setTimeout(() => {
+            this.navigator.pushTo("/q2");
+          }, 200);
+        });
     }
   },
   mounted() {
