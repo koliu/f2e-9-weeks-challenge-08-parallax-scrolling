@@ -28,6 +28,8 @@ Vue.mixin({
   }
 });
 
+Vue.filter('toUpperCase', v => typeof v === 'string' ? v.toUpperCase() : v);
+
 new Vue({
   el: "#app",
   router,

@@ -12,14 +12,36 @@
         i.ft-title GEOMETRY PERSON
         i.ft-sub-title-2 find your core personality type in shapes!
     transition(name="fade" mode="out-in" appear, v-if="finishAnimation")
-      router-view
+      router-view(@emit-answer="answer", :questions="questions")
 </template>
 <script>
 export default {
   data: function() {
     return {
       page: "index",
-      finishAnimation: false
+      finishAnimation: false,
+      answers: [],
+      questions: [
+        {
+          id: 'q1',
+          title: 'If one day you get a gift that can change the rule of the world, which ability will you choose?',
+          subTitle: 'Choose the answer appeared in your mind instantly',
+          options: [
+            {
+              desc: 'Destroy all humans in the world',
+              point: 1
+            },
+            {
+              desc: 'Make t he war never happened',
+              point: 2
+            },
+            {
+              desc: 'You won’t get old and live forever',
+              point: 3
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -31,20 +53,19 @@ export default {
     logout() {
       this.loginManager.logout();
       this.$forceUpdate();
+    }, 
+    answer(index, point) {
+      this.answers[index] = point;
     }
   },
   mounted() {
-    // setTimeout(() => {
+    // document.querySelector('.title').addEventListener('animationend', () => {
     //   this.finishAnimation = true;
     //   this.navigator.pushTo("/q1");
-    // }, 100);//8000);
-    document.querySelector('.title').addEventListener('animationend', () => {
-      this.finishAnimation = true;
-      this.navigator.pushTo("/q1");
-    }, true);
+    // }, true);
 
-    // this.finishAnimation = true;
-    // this.navigator.pushTo("/q1");
+    this.finishAnimation = true;
+    this.navigator.pushTo("/q1");
   }
 };
 </script>

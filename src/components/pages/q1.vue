@@ -3,16 +3,14 @@
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
     .wrap
-      .main(:style="isBeginToRedirect ? 'animation: fade 0.5s forwards reverse' : ''")
-        .ft-title.red Q1
-        .ft-sub-title.white If one day you get a gift that can change the rule of the world, which ability will you choose? 
-        .ft-sub-title-2.blue Choose the answer appeared in your mind instantly
+      .main(:style="isAnswered ? 'animation: fade 0.5s forwards reverse' : ''")
+        .ft-title.red {{question.id | toUpperCase}}
+        .ft-sub-title.white(v-text="question.title")
+        .ft-sub-title-2.blue(v-text="question.subTitle")
         ul.list.ft-paragraph.white
-          li(@click.prevent="redirectPage()") Destroy all humans in the world
-          li(@click.prevent="redirectPage()") Make t he war never happened
-          li(@click.prevent="redirectPage()") You won’t get old and live forever
-      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isBeginToRedirect ? 'width: 100%; height: 120%; transition: width 1s ease-in-out 1s' : isTriangleLoaded ? 'height: 120%' : ''")
-        .panel-wrap(:style="isBeginToRedirect ? 'animation: fade 0.5s forwards reverse' : ''")
+          li(v-for="(q, i) in question.options", @click.prevent="redirectPage(i)", v-text="q.desc")
+      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isAnswered ? 'width: 100%; height: 120%; transition: width 1s ease-in-out 1s' : isTriangleLoaded ? 'height: 120%' : ''")
+        .panel-wrap(:style="isAnswered ? 'animation: fade 0.5s forwards reverse' : ''")
           .square(:class="{'load-square':isPanelLoaded, 'default-square':!isPanelLoaded}"
           , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded ? 'animation: spin-linear 3s infinite 0.3s linear' : ''")
           .triangle(:class="{'load-triangle':isPanelLoaded, 'default-triangle':!isPanelLoaded}"
@@ -22,6 +20,11 @@
 </template>
 <script>
 export default {
+  props: {
+    questions: {
+      type: Array
+    }
+  },
   data: function() {
     return {
       isTitleLoaded: false,
@@ -29,7 +32,8 @@ export default {
       isSquareLoaded: false,
       isCircleLoaded: false,
       isTriangleLoaded: false,
-      isBeginToRedirect: false
+      isAnswered: false,
+      question: {}
     };
   },
   methods: {
@@ -42,18 +46,19 @@ export default {
       this.loginManager.logout();
       this.$forceUpdate();
     },
-    redirectPage() {
-      this.isBeginToRedirect = true;
-      document
-        .querySelector(".panel")
-        .addEventListener("transitionend", () => {
-          setTimeout(() => {
-            this.navigator.pushTo("/q2");
-          }, 200);
-        });
+    redirectPage(answerIndex) {
+      this.$emit("emit-answer", this.questions.findIndex(e => e.id === this.question.id), this.question.options[answerIndex].point);
+      this.isAnswered = true;
+      document.querySelector(".panel").addEventListener("transitionend", () => {
+        setTimeout(() => {
+          this.navigator.pushTo("/q2");
+        }, 200);
+      });
     }
   },
   mounted() {
+    Object.assign(this.question, this.questions[0]);
+
     const main = document.querySelector(".main");
     main.addEventListener("animationend", () => {
       this.isTitleLoaded = true;

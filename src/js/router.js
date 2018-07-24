@@ -11,7 +11,8 @@ export default {
         path: '/q1',
         name: 'q1',
         component: () =>
-          import ('../components/pages/q1.vue')
+          import ('../components/pages/q1.vue'),
+        props: true
       }, {
         path: '/q2',
         name: 'q2',
