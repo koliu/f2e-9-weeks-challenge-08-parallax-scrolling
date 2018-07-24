@@ -12,7 +12,7 @@
         i.ft-title GEOMETRY PERSON
         i.ft-sub-title-2 find your core personality type in shapes!
     transition(name="fade" mode="out-in" appear, v-if="finishAnimation")
-      router-view(@emit-answer="answer", :questions="questions")
+      router-view(@emit-answer="answer", :get-question="getQuestion")
 </template>
 <script>
 export default {
@@ -21,27 +21,7 @@ export default {
       page: "index",
       finishAnimation: false,
       answers: [],
-      questions: [
-        {
-          id: 'q1',
-          title: 'If one day you get a gift that can change the rule of the world, which ability will you choose?',
-          subTitle: 'Choose the answer appeared in your mind instantly',
-          options: [
-            {
-              desc: 'Destroy all humans in the world',
-              point: 1
-            },
-            {
-              desc: 'Make t he war never happened',
-              point: 2
-            },
-            {
-              desc: 'You won’t get old and live forever',
-              point: 3
-            }
-          ]
-        }
-      ]
+      questions: []
     };
   },
   methods: {
@@ -54,18 +34,38 @@ export default {
       this.loginManager.logout();
       this.$forceUpdate();
     }, 
-    answer(index, point) {
+    answer(id, point) {
+      const index = this.questions.findIndex(e => e.id === id);
       this.answers[index] = point;
+    },
+    loadQuestions() {
+      this.http
+      .get('/src/data/data.json')
+      .then(res => {
+        this.questions = res.data.questions;
+      })
+      .catch(err => {
+        throw new Error(`Fail to load data of questions: ${err}`);
+      });
+    },
+    getQuestion(id) {
+      return this.questions.find(e => e.id === id);
     }
   },
+  created() {
+    this.loadQuestions();
+  },
   mounted() {
+
     // document.querySelector('.title').addEventListener('animationend', () => {
     //   this.finishAnimation = true;
     //   this.navigator.pushTo("/q1");
     // }, true);
 
-    this.finishAnimation = true;
-    this.navigator.pushTo("/q1");
+    setTimeout(() => {
+      this.finishAnimation = true;
+      this.navigator.pushTo("/q1");
+    }, 300);
   }
 };
 </script>

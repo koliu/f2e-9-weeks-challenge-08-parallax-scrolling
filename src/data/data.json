@@ -1,0 +1,20 @@
+{
+  "questions": [{
+    "id": "q1",
+    "title": "If one day you get a gift that can change the rule of the world, which ability will you choose?",
+    "subTitle": "Choose the answer appeared in your mind instantly",
+    "options": [{
+        "desc": "Destroy all humans in the world",
+        "point": 1
+      },
+      {
+        "desc": "Make t he war never happened",
+        "point": 2
+      },
+      {
+        "desc": "You won’t get old and live forever",
+        "point": 3
+      }
+    ]
+  }]
+}

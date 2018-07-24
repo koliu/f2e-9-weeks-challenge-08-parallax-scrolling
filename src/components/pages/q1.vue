@@ -21,8 +21,8 @@
 <script>
 export default {
   props: {
-    questions: {
-      type: Array
+    getQuestion: {
+      type: Function
     }
   },
   data: function() {
@@ -47,7 +47,11 @@ export default {
       this.$forceUpdate();
     },
     redirectPage(answerIndex) {
-      this.$emit("emit-answer", this.questions.findIndex(e => e.id === this.question.id), this.question.options[answerIndex].point);
+      this.$emit(
+        "emit-answer",
+        this.question.id,
+        this.question.options[answerIndex].point
+      );
       this.isAnswered = true;
       document.querySelector(".panel").addEventListener("transitionend", () => {
         setTimeout(() => {
@@ -57,7 +61,7 @@ export default {
     }
   },
   mounted() {
-    Object.assign(this.question, this.questions[0]);
+    this.question = this.getQuestion('q1');
 
     const main = document.querySelector(".main");
     main.addEventListener("animationend", () => {
