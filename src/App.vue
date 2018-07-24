@@ -4,8 +4,7 @@
       router-link(to="/index") Home
       router-link(to="/spec") Spec
       router-link(to="/about") About
-    div.h-100-p
-      router-view
+    router-view
 </template>
 <style lang="scss" scoped>
 .menu {

@@ -1,21 +1,25 @@
 <template lang="pug">
-  .app.h-100-p Coming Soon...
-    button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
-    button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
-    .item.square
-    .item.circle
-    .item.star
-      .top
-      .bottom
-    .item.title
-      i.ft-title GEOMETRY PERSON
-      i.ft-sub-title-2 find your core personality type in shapes!
+  .index-main(:class="{'hide-over-flow':!finishAnimation}")
+    template(v-if="!finishAnimation")
+      button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
+      button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
+      .item.square
+      .item.circle
+      .item.star
+        .top
+        .bottom
+      .item.title
+        i.ft-title GEOMETRY PERSON
+        i.ft-sub-title-2 find your core personality type in shapes!
+    transition(name="fade" mode="out-in" appear, v-if="finishAnimation")
+      router-view
 </template>
 <script>
 export default {
   data: function() {
     return {
-      page: "index"
+      page: "index",
+      finishAnimation: false
     };
   },
   methods: {
@@ -28,6 +32,16 @@ export default {
       this.loginManager.logout();
       this.$forceUpdate();
     }
+  },
+  mounted() {
+    // setTimeout(() => {
+    //   this.finishAnimation = true;
+    //   this.navigator.pushTo("/q1");
+    // }, 100);//8000);
+    document.querySelector('.title').addEventListener('animationend', () => {
+      this.finishAnimation = true;
+      this.navigator.pushTo("/q1");
+    }, true);
   }
 };
 </script>
@@ -40,8 +54,8 @@ export default {
 $star-height: 365px;
 $star-head-height: 57px;
 $star-triangle-height: 365px - $star-head-height;
-.app {
-  padding-bottom: 30px;
+.index-main {
+  height: calc(100% - 32px); // - bottom menu bar
   @include flex-box(center, center);
 
   .item {
@@ -53,8 +67,7 @@ $star-triangle-height: 365px - $star-head-height;
       width: 439px;
       z-index: 6;
       animation: spin 4s linear reverse forwards,
-                zoom-out 1s linear 4.25s forwards,
-                fade 2s linear 5.25s reverse forwards;
+        zoom-out 1s ease 4.25s forwards, fade 2s linear 5.25s reverse forwards;
     }
     &.circle {
       background-color: $color-blue;
@@ -63,8 +76,7 @@ $star-triangle-height: 365px - $star-head-height;
       width: 539px;
       z-index: 8;
       animation: zoom-in-out 4s linear forwards,
-                zoom-out 1s linear 4.5s forwards,
-                fade 2s linear 5.25s reverse forwards;
+        zoom-out 1s ease 4.5s forwards, fade 2s linear 5.25s reverse forwards;
     }
 
     &.star {
@@ -72,9 +84,8 @@ $star-triangle-height: 365px - $star-head-height;
       height: $star-height;
       width: $star-height;
       z-index: 10;
-      animation: spin 4s linear forwards,
-                zoom-out 1s linear 4.75s forwards,
-                fade 2s linear 5.25s reverse forwards;
+      animation: spin 4s linear forwards, zoom-out 1s ease 4.75s forwards,
+        fade 2s linear 5.25s reverse forwards;
 
       .top,
       .bottom {
@@ -98,36 +109,19 @@ $star-triangle-height: 365px - $star-head-height;
       z-index: 12;
       animation: fade 2s linear 5.25s reverse forwards;
       @include flex-box(center, center, column, wrap);
-      
+
       i {
         display: block;
 
         &:first-child {
-          margin-bottom: 12px;
+          margin-bottom: 6px;
         }
 
         &:last-child {
-          margin-top: 12px;
+          margin-top: 6px;
         }
       }
     }
-  }
-}
-
-.btn-login {
-  border: 1px dashed $color-yellow;
-  background: rgba(255, 255, 255, 0.3);
-  color: $color-yellow;
-  position: fixed;
-  left: 5px;
-  bottom: 5px;
-  z-index: 99999;
-
-  &:hover {
-    border-color: $color-blue;
-    color: $color-blue;
-    cursor: pointer;
-    font-weight: bolder;
   }
 }
 </style>

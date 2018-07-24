@@ -1,4 +1,4 @@
-@import "../css/partials/variables";
+@import "variables";
 
 /* background classes */
 .bg-black {
@@ -49,22 +49,47 @@
 .ft-title {
   font-size: 64px;
   font-weight: $font-bold;
+  line-height: 72px;
 }
 .ft-sub-title {
   font-size: 36px;
   font-weight: $font-bold;
+  line-height: 44px;
 }
 .ft-sub-title-2 {
   font-size: 24px;
   font-weight: $font-regular;
+  line-height: 32px;
 }
 .ft-paragraph {
   font-size: 20px;
   font-weight: $font-regular;
+  line-height: 28px;
 }
 
 .h-100-p {
   height: 100%;
+}
+
+.hide-over-flow {
+  overflow: hidden;
+}
+
+.btn-login {
+  border: 1px dashed $color-yellow;
+  background: rgba(255, 255, 255, 0.3);
+  color: $color-yellow;
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  z-index: 99999;
+
+  &:hover {
+    border-color: $color-blue;
+    color: $color-blue;
+    cursor: pointer;
+    font-weight: bolder;
+  }
 }
 
 /* mixin */
