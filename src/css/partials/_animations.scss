@@ -28,6 +28,12 @@
   }
 }
 
+@keyframes spin-linear {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes zoom-in-out {
   0% {
     transform: scale(1);
@@ -52,11 +58,15 @@
   }
 }
 
-@keyframes slide-x {
-  0% {
-    width: 0;
+@keyframes q2-circle {
+  0%{
+    transform-origin: 0 0;
+  }
+  50%{
+    transform-origin: -5px 5px;
+    transform: translate(-5%, -5%);
   }
   100% {
-    width: 30%;
+    transform-origin: 0 0;
   }
 }

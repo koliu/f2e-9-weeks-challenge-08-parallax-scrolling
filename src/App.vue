@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.h-100-p
+  .app.h-100-p
     nav.menu
       router-link(to="/index") Home
       router-link(to="/spec") Spec

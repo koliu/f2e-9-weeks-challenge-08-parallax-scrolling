@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app
+  .q1
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
     .wrap
@@ -8,19 +8,27 @@
         .ft-sub-title.white If one day you get a gift that can change the rule of the world, which ability will you choose? 
         .ft-sub-title-2.blue Choose the answer appeared in your mind instantly
         ul.list.ft-paragraph.white
-          li Destroy all humans in the world
-          li Make the war never happened
-          li You won’t get old and live forever
-      .animations
-        .square.red
-        .triangle.white
-        .circle.black
+          router-link(to="/q2", tag="li") Destroy all humans in the world
+          router-link(to="/q2", tag="li") Make t he war never happened
+          router-link(to="/q2", tag="li") You won’t get old and live forever
+      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isTriangleLoaded ? 'height: 120%' : ''")
+        .square(:class="{'load-square':isPanelLoaded, 'default-square':!isPanelLoaded}"
+        , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded ? 'animation: spin-linear 3s infinite 0.3s linear' : ''")
+        .triangle(:class="{'load-triangle':isPanelLoaded, 'default-triangle':!isPanelLoaded}"
+        , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: spin-linear 3s infinite 0.3s linear reverse' : ''")
+        .circle(:class="{'load-circle':isPanelLoaded, 'default-circle':!isPanelLoaded}"
+        , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q2-circle 4s infinite 0.3s linear' : ''")
 </template>
 <script>
 export default {
   data: function() {
     return {
-      page: "index"
+      page: "index",
+      isTitleLoaded: false,
+      isPanelLoaded: false,
+      isSquareLoaded: false,
+      isCircleLoaded: false,
+      isTriangleLoaded: false
     };
   },
   methods: {
@@ -33,6 +41,30 @@ export default {
       this.loginManager.logout();
       this.$forceUpdate();
     }
+  },
+  mounted() {
+    const main = document.querySelector(".main");
+    main.addEventListener("animationend", () => {
+      this.isTitleLoaded = true;
+    });
+
+    const panel = document.querySelector(".panel");
+    panel.addEventListener("transitionend", () => {
+      this.isPanelLoaded = true;
+    });
+
+    const square = document.querySelector(".square");
+    square.addEventListener("transitionend", () => {
+      this.isSquareLoaded = true;
+    });
+    const circle = document.querySelector(".circle");
+    circle.addEventListener("transitionend", () => {
+      this.isCircleLoaded = true;
+    });
+    const triangle = document.querySelector(".triangle");
+    triangle.addEventListener("transitionend", () => {
+      this.isTriangleLoaded = true;
+    });
   }
 };
 </script>
@@ -42,10 +74,11 @@ export default {
 @import "../../css/partials/animations";
 @import "../../css/partials/text-utils";
 
-.app {
+.q1 {
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 
   .wrap {
     box-sizing: border-box;
@@ -77,6 +110,7 @@ export default {
         li {
           border: 2px solid $color-white;
           border-radius: 30.5px;
+          cursor: pointer;
           height: 56px;
           margin-top: 10px;
           width: 380px;
@@ -90,22 +124,70 @@ export default {
       }
     }
 
-    .animations {
-      animation: slide-x 1s ease-in 0.5s forwards;
+    .panel {
       background-color: $color-blue;
       height: 100%;
       position: absolute;
       right: 0;
       top: 0;
-      width: 0;
 
       .square {
+        background-color: $color-red;
         height: 179px;
+        left: calc(6.7% / 41.2%);
         position: absolute;
-        bottom: 0;
         width: 179px;
+        transition: top 1.5s ease-in;
+      }
+      .triangle {
+        border-left: calc(147px / 2) solid transparent;
+        border-right: calc(147px / 2) solid transparent;
+        border-bottom: 127px solid $color-white;
+        left: calc(29.2% / 41.2%);
+        position: absolute;
+        transition: top 1.5s ease-in 0.3s;
+      }
+      .circle {
+        background-color: $color-black;
+        border-radius: 50%;
+        height: 402px;
+        width: 402px;
+        position: absolute;
+        transition: top 1.5s ease-in 0.3s;
+        left: calc(8% / 41.2%);
       }
     }
   }
+}
+.default-circle {
+  visibility: hidden;
+  top: 100%;
+}
+.load-circle {
+  visibility: visible;
+  top: 504px;
+}
+.default-triangle {
+  visibility: hidden;
+  top: 100%;
+}
+.load-triangle {
+  visibility: visible;
+  top: 320px;
+}
+.default-square {
+  visibility: hidden;
+  top: 100%;
+}
+.load-square {
+  visibility: visible;
+  top: 108px;
+}
+.load-panel {
+  width: 30.2%;
+  transition: width 1s ease-in 0.1s;
+}
+.width-0 {
+  width: 0;
 }
 </style>
