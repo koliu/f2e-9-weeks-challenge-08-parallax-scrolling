@@ -18,11 +18,11 @@ export default {
         name: 'q2',
         component: () =>
           import ('../components/pages/q2.vue')
-        // }, {
-        //   path: '',
-        //   name: 'q3',
-        //   component: () =>
-        //     import ('../components/pages/q3.vue')
+      }, {
+        path: '/q3',
+        name: 'q3',
+        component: () =>
+          import ('../components/pages/q3.vue')
         // }, {
         //   path: '',
         //   name: 'finish',

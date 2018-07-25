@@ -100,3 +100,15 @@
     transform: translate(0, 0);
   }
 }
+
+@keyframes q3-triangle {
+  100% {
+    transform: rotate(210deg);
+  }
+}
+
+@keyframes q3-square {
+  100% {
+    transform: rotate(452deg);
+  }
+}

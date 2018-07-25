@@ -57,15 +57,15 @@ export default {
   },
   mounted() {
 
-    // document.querySelector('.title').addEventListener('animationend', () => {
-    //   this.finishAnimation = true;
-    //   this.navigator.pushTo("/q1");
-    // }, true);
-
-    setTimeout(() => {
+    document.querySelector('.title').addEventListener('animationend', () => {
       this.finishAnimation = true;
       this.navigator.pushTo("/q1");
-    }, 300);
+    }, true);
+
+    // setTimeout(() => {
+    //   this.finishAnimation = true;
+    //   this.navigator.pushTo("/q1");
+    // }, 300);
   }
 };
 </script>
