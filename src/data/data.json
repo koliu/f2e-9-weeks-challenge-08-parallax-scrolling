@@ -13,7 +13,41 @@
       },
       {
         "desc": "You won’t get old and live forever",
-        "point": 3
+        "point": 4
+      }
+    ]
+  },{
+    "id": "q2",
+    "title": "Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?",
+    "subTitle": "Choose the answer appeared in your mind instantly",
+    "options": [{
+        "desc": "The left one",
+        "point": 8
+      },
+      {
+        "desc": "The right one",
+        "point": 16
+      },
+      {
+        "desc": "Open Google Map",
+        "point": 32
+      }
+    ]
+  },{
+    "id": "q3",
+    "title": "When you’re in a exam which you barely prepared for, which is your priority solution?",
+    "subTitle": "Choose the answer appeared in your mind instantly",
+    "options": [{
+        "desc": "Take a nap right away",
+        "point": 64
+      },
+      {
+        "desc": "Fill the answer randomly",
+        "point": 128
+      },
+      {
+        "desc": "All fill the answer \"C\"",
+        "point": 256
       }
     ]
   }]

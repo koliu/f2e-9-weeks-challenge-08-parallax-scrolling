@@ -16,7 +16,7 @@
           .triangle(:class="{'load-triangle':isPanelLoaded, 'default-triangle':!isPanelLoaded}"
           , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: spin-linear 3s infinite 0.3s linear reverse' : ''")
           .circle(:class="{'load-circle':isPanelLoaded, 'default-circle':!isPanelLoaded}"
-          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q2-circle 4s infinite 0.3s linear' : ''")
+          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q1-circle 4s infinite 0.3s linear' : ''")
 </template>
 <script>
 export default {

@@ -3,18 +3,39 @@
     button.btn-login(@click.prevent="login", v-if="!this.loginManager.isLoggedIn()") LOGIN
     button.btn-login(@click.prevent="logout", v-if="this.loginManager.isLoggedIn()") LOGOUT
     .wrap
-      .main
-        .ft-title.red Q2
-        .ft-sub-title.white Imagine you’re almost late, but totally lost at a forked road. Which way do you prefer to go?
-        .ft-sub-title-2.blue Choose the answer appeared in your mind 
+      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isAnswered ? 'width: 100%; height: 120%; transition: width 1s ease-in-out 1s' : isTriangleLoaded ? 'height: 120%' : ''")
+        .panel-wrap(:style="isAnswered ? 'animation: fade 0.5s forwards reverse' : ''")
+          .square(:class="{'load-square':isPanelLoaded, 'default-square':!isPanelLoaded}"
+          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded ? 'animation: q2-square 4.5s infinite 0.3s linear reverse' : ''")
+          .triangle(:class="{'load-triangle':isPanelLoaded, 'default-triangle':!isPanelLoaded}"
+          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q2-triangle 4s infinite 0.3s linear' : ''")
+          .circle(:class="{'load-circle':isPanelLoaded, 'default-circle':!isPanelLoaded}"
+          , :style="isSquareLoaded && isTriangleLoaded && isCircleLoaded  ? 'animation: q2-circle 4s infinite 0.3s linear' : ''")
+      .wrap1
+      .main(:style="isAnswered ? 'animation: fade 0.5s forwards reverse' : ''")
+        .ft-title.red {{question.id | toUpperCase}}
+        .ft-sub-title.white(v-text="question.title")
+        .ft-sub-title-2.blue-light(v-text="question.subTitle")
         ul.list.ft-paragraph.white
-      .panel(:class="{'load-panel':isTitleLoaded, 'width-0':!isTitleLoaded}", :style="isTriangleLoaded ? 'height: 120%' : ''")
+          li(v-for="(q, i) in question.options", @click.prevent="redirectPage(i)", v-text="q.desc")
         
 </template>
 <script>
 export default {
+  props: {
+    getQuestion: {
+      type: Function
+    }
+  },
   data: function() {
     return {
+      isTitleLoaded: false,
+      isPanelLoaded: false,
+      isSquareLoaded: false,
+      isCircleLoaded: false,
+      isTriangleLoaded: false,
+      isAnswered: false,
+      question: {}
     };
   },
   methods: {
@@ -26,10 +47,46 @@ export default {
     logout() {
       this.loginManager.logout();
       this.$forceUpdate();
+    },
+    redirectPage(answerIndex) {
+      this.$emit(
+        "emit-answer",
+        this.question.id,
+        this.question.options[answerIndex].point
+      );
+      this.isAnswered = true;
+      document.querySelector(".panel").addEventListener("transitionend", () => {
+        setTimeout(() => {
+          this.navigator.pushTo("/q3");
+        }, 200);
+      });
     }
   },
   mounted() {
+    this.question = this.getQuestion('q2');
 
+    const main = document.querySelector(".main");
+    main.addEventListener("animationend", () => {
+      this.isTitleLoaded = true;
+    });
+
+    const panel = document.querySelector(".panel");
+    panel.addEventListener("transitionend", () => {
+      this.isPanelLoaded = true;
+    });
+
+    const square = document.querySelector(".square");
+    square.addEventListener("transitionend", () => {
+      this.isSquareLoaded = true;
+    });
+    const circle = document.querySelector(".circle");
+    circle.addEventListener("transitionend", () => {
+      this.isCircleLoaded = true;
+    });
+    const triangle = document.querySelector(".triangle");
+    triangle.addEventListener("transitionend", () => {
+      this.isTriangleLoaded = true;
+    });
   }
 };
 </script>
@@ -39,6 +96,10 @@ export default {
 @import "../../css/partials/animations";
 @import "../../css/partials/text-utils";
 
+$panel-width: 35%;
+$square-width: 350px;
+$triangle-width: 320px;
+$circle-width: 191px;
 .q2 {
   background-color: $color-blue;
   height: 100%;
@@ -48,15 +109,21 @@ export default {
 
   .wrap {
     box-sizing: border-box;
-    padding: 86px 0 0 122px;
+    padding: 86px 122px 0 0;
     position: relative;
     width: 100%;
-    @include flex-box(flex-start, flex-start, row, nowrap);
+    @include flex-box(flex-end, flex-start, row, nowrap);
+
+    .wrap1 {
+      width: 40%;
+    }
 
     .main {
       animation: fade 0.5s ease-in 0s forwards;
       height: 768px;
-      width: 60%;
+      width: 40%;
+      position: relative;
+      right: 0;
       @include flex-box(flex-start, flex-start, column, wrap);
 
       .ft-title {
@@ -91,36 +158,36 @@ export default {
     }
 
     .panel {
-      background-color: $color-blue;
+      background-color: $color-red;
       height: 100%;
       position: absolute;
-      right: 0;
+      left: 0;
       top: 0;
 
       .square {
-        background-color: $color-red;
-        height: 179px;
-        left: calc(6.7% / 41.2%);
+        background-color: $color-blue;
+        height: $square-width;
+        left: - $square-width / 2;
         position: absolute;
-        width: 179px;
-        transition: top 1.5s ease-in;
+        width: $square-width;
+        transition: top 1.5s ease-in 0.3s;
       }
       .triangle {
-        border-left: calc(147px / 2) solid transparent;
-        border-right: calc(147px / 2) solid transparent;
-        border-bottom: 127px solid $color-white;
-        left: calc(29.2% / 41.2%);
+        border-left: $triangle-width / 2 solid transparent;
+        border-right: $triangle-width / 2 solid transparent;
+        border-bottom: $triangle-width solid $color-white;
+        left: calc(1.2% / $panel-width);
         position: absolute;
-        transition: top 1.5s ease-in 0.3s;
+        transition: top 1.5s ease-in;
       }
       .circle {
         background-color: $color-black;
         border-radius: 50%;
-        height: 402px;
-        width: 402px;
+        height: $circle-width;
+        width: $circle-width;
         position: absolute;
-        transition: top 1.5s ease-in 0.3s;
-        left: calc(8% / 41.2%);
+        transition: top 1.5s ease-in 0.6s;
+        left: $panel-width / 2;
       }
     }
   }
@@ -131,7 +198,7 @@ export default {
 }
 .load-circle {
   visibility: visible;
-  top: 504px;
+  top: 424px;
 }
 .default-triangle {
   visibility: hidden;
@@ -139,7 +206,8 @@ export default {
 }
 .load-triangle {
   visibility: visible;
-  top: 320px;
+  transform: rotate(148deg);
+  top: -80px;
 }
 .default-square {
   visibility: hidden;
@@ -147,10 +215,11 @@ export default {
 }
 .load-square {
   visibility: visible;
-  top: 108px;
+  transform: rotate(54deg);
+  top: 260px;
 }
 .load-panel {
-  width: 30.2%;
+  width: $panel-width;
   transition: width 1s ease-in 0.1s;
 }
 .width-0 {
